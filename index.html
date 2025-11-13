@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free TikTok Boosting - VIP Panel</title>
+<script src='//libtl.com/sdk.js' data-zone='10172531' data-sdk='show_10172531'></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body{
+  margin:0;padding:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#2b0057,#1b0033);
+  color:#fff;
+  display:flex;justify-content:center;align-items:center;
+  height:100vh;
+}
+.container{
+  background:rgba(20,0,40,0.9);
+  padding:25px;border-radius:20px;width:95%;max-width:420px;
+  text-align:center;box-shadow:0 0 30px rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);display:none;
+}
+.profile-pic{
+  width:100px;height:100px;border-radius:50%;
+  object-fit:cover;border:3px solid #8e24aa;margin-bottom:10px;
+}
+h1{font-size:22px;margin-bottom:5px;}
+h2{font-size:18px;color:#90caf9;}
+.stat{
+  background:rgba(255,255,255,0.1);
+  padding:15px;border-radius:10px;margin-top:15px;font-size:16px;
+}
+button{
+  width:100%;padding:15px;border:none;border-radius:12px;
+  font-size:16px;font-weight:bold;margin-top:15px;cursor:pointer;
+  color:#fff;transition:0.3s;
+}
+.watch-btn{background:linear-gradient(45deg,#7b1fa2,#4a148c);}
+.info-btn{background:linear-gradient(45deg,#009688,#00695c);}
+.unlock-btn{background:linear-gradient(45deg,#ff8a65,#ff7043);}
+.user-count{font-size:14px;margin-top:10px;color:#ccc;}
+/* নিচে নতুন নাম স্ক্রলিং */
+.scroller{
+  height:35px;overflow:hidden;position:relative;
+  margin-top:20px;
+}
+.scroll-text{
+  position:absolute;width:100%;text-align:center;
+  animation:scrollAnim 4s ease-in-out infinite;
+  opacity:0;
+}
+@keyframes scrollAnim{
+  0%{opacity:0;transform:translateY(10px);}
+  10%{opacity:1;transform:translateY(0);}
+  40%{opacity:1;}
+  70%{opacity:0;transform:translateY(-10px);}
+  100%{opacity:0;}
+}
+
+/* নাম ইনপুট বক্স */
+.name-popup{
+  position:fixed;inset:0;background:rgba(0,0,0,0.9);
+  display:flex;justify-content:center;align-items:center;z-index:999;
+}
+.name-box{
+  background:#240046;padding:25px;border-radius:15px;
+  text-align:center;color:#fff;width:85%;max-width:320px;
+}
+.name-box input{
+  padding:10px;border-radius:8px;border:none;width:90%;
+  margin-top:10px;font-size:15px;text-align:center;
+}
+.name-box button{
+  margin-top:15px;background:linear-gradient(45deg,#7b1fa2,#4a148c);
+}
+
+/* অ্যালার্ট স্ক্রিন */
+.alert-screen{
+  position:fixed;inset:0;background:rgba(25,0,51,1);
+  display:flex;justify-content:center;align-items:center;
+  flex-direction:column;color:#fff;text-align:center;
+  z-index:2000;font-size:18px;padding:20px;
+}
+.alert-screen h2{margin-bottom:15px;color:#ffca28;}
+.alert-timer{margin-top:10px;font-size:22px;color:#90caf9;}
+
+.info-popup{
+  position:fixed;inset:0;background:rgba(0,0,0,0.85);
+  display:none;justify-content:center;align-items:center;z-index:1500;
+}
+.info-box{
+  background:#1c0030;color:#fff;padding:25px;border-radius:15px;
+  width:90%;max-width:340px;text-align:center;line-height:1.6;
+}
+.info-box a{color:#64b5f6;text-decoration:none;font-weight:600;}
+.close-info{
+  margin-top:15px;background:linear-gradient(45deg,#8e24aa,#6a1b9a);
+}
+</style>
+</head>
+<body>
+
+<!-- ১০ সেকেন্ড অ্যালার্ট -->
+<div class="alert-screen" id="alertScreen">
+  <h2>⚠️ সতর্কতা!</h2>
+  <p>এই অ্যাপ ব্যবহার করার আগে নির্দেশনাগুলো পড়ুন।</p>
+  <div class="alert-timer" id="alertTimer">10</div>
+</div>
+
+<!-- নাম ও ছবি ইনপুট -->
+<div class="name-popup" id="namePopup">
+  <div class="name-box">
+    <h2>👋 স্বাগতম!</h2>
+    <p>আপনার ছবি ও নাম লিখুন নিচে 👇</p>
+    <input type="file" accept="image/*" id="userImageInput"><br>
+    <input type="text" id="userNameInput" placeholder="আপনার নাম লিখুন">
+    <button onclick="saveUser()">চালু করুন</button>
+  </div>
+</div>
+
+<!-- মূল কনটেন্ট -->
+<div class="container" id="mainContainer">
+  <img src="" id="profilePic" class="profile-pic" alt="">
+  <h1 id="userName"></h1>
+  <h2>⭐ VIP USER PANEL</h2>
+  <div class="stat">দেখা হয়েছে <b id="watched">0</b> / 10 বিজ্ঞাপন</div>
+  <button class="watch-btn" id="watchBtn" onclick="watchAd()">🎬 বিজ্ঞাপন দেখুন</button>
+  <button class="unlock-btn" id="unlockBtn" onclick="unlockFeature()" disabled>🔒 আনলক (১০ অ্যাড দেখুন)</button>
+  <button class="info-btn" onclick="openInfo()">📘 কিভাবে কাজ করবেন জানুন</button>
+  <div class="user-count">🌍 1M+ Active Users</div>
+
+  <!-- নিচে নতুন অ্যানিমেশন টেক্সট -->
+  <div class="scroller">
+    <div class="scroll-text" id="scrollText">Loading...</div>
+  </div>
+</div>
+
+<!-- নির্দেশনা -->
+<div class="info-popup" id="infoPopup">
+  <div class="info-box">
+    <h3>নির্দেশনা</h3>
+    <p>দশটি অ্যাড দেখার পর আনলক হবে। আনলক করলে লিঙ্ক খুলবে এবং ১ ঘন্টা ৩০ মিনিটের সেশন চলবে। ৩ ঘন্টা পর নতুন করে ১০টি অ্যাড দেখুন।<br>
+    🔔 টেলিগ্রাম: <a href="https://t.me/arafatnxt" target="_blank">t.me/arafatnxt</a>
+    </p>
+    <button class="close-info" onclick="closeInfo()">ঠিক আছে</button>
+  </div>
+</div>
+
+<script>
+const alertScreen=document.getElementById('alertScreen');
+const alertTimer=document.getElementById('alertTimer');
+const namePopup=document.getElementById('namePopup');
+const mainContainer=document.getElementById('mainContainer');
+const profilePic=document.getElementById('profilePic');
+const userNameEl=document.getElementById('userName');
+const watchedEl=document.getElementById('watched');
+const unlockBtn=document.getElementById('unlockBtn');
+const scrollText=document.getElementById('scrollText');
+
+let countdown=10;
+const timer=setInterval(()=>{
+  countdown--; alertTimer.textContent=countdown;
+  if(countdown<=0){clearInterval(timer);alertScreen.style.display='none';checkUser();}
+},1000);
+
+function checkUser(){
+  const img=localStorage.getItem('userImage');
+  const name=localStorage.getItem('userName');
+  if(img && name){
+    profilePic.src=img;
+    userNameEl.textContent=name;
+    mainContainer.style.display='block';
+    loadWatched();
+    checkCooldown();
+  }else{
+    namePopup.style.display='flex';
+  }
+}
+
+function saveUser(){
+  const fileInput=document.getElementById("userImageInput");
+  const nameInput=document.getElementById("userNameInput").value.trim();
+  if(!fileInput.files[0] || !nameInput){alert("দয়া করে ছবি ও নাম দিন!");return;}
+  const reader=new FileReader();
+  reader.onload=function(e){
+    localStorage.setItem("userImage",e.target.result);
+    localStorage.setItem("userName",nameInput);
+    namePopup.style.display="none";
+    profilePic.src=e.target.result;
+    userNameEl.textContent=nameInput;
+    mainContainer.style.display='block';
+    loadWatched(); checkCooldown();
+  }
+  reader.readAsDataURL(fileInput.files[0]);
+}
+
+let watched=0;
+function loadWatched(){
+  watched=parseInt(localStorage.getItem("watched")||"0");
+  watchedEl.textContent=watched;
+  updateWatchStatus();
+}
+
+function watchAd(){
+  if(typeof show_10172531==="function"){ show_10172531().then(()=>finishAd()); }
+  else{ setTimeout(finishAd,1500); }
+}
+
+function finishAd(){
+  watched++;
+  if(watched>10)watched=10;
+  localStorage.setItem("watched",watched);
+  watchedEl.textContent=watched;
+  updateWatchStatus();
+}
+
+function updateWatchStatus(){
+  if(watched>=10){
+    unlockBtn.disabled=false;
+    unlockBtn.textContent="🔓 আনলক হয়ে গেছে — ক্লিক করুন";
+  }
+}
+
+function unlockFeature(){
+  const sessionTime=90*60*1000;
+  const cooldownTime=3*60*60*1000;
+  const now=new Date().getTime();
+  localStorage.setItem('sessionEnd',now+sessionTime);
+  localStorage.setItem('cooldown',now+cooldownTime);
+  alert("১ ঘন্টা ৩০ মিনিটের সেশন শুরু হয়েছে!");
+  window.open("https://zefoy.com/","_blank");
+  watched=0;
+  localStorage.setItem("watched",watched);
+  watchedEl.textContent=watched;
+  unlockBtn.disabled=true;
+  unlockBtn.textContent="🔒 আনলক (১০ অ্যাড দেখুন)";
+}
+
+function checkCooldown(){
+  const cooldown=parseInt(localStorage.getItem('cooldown'));
+  if(cooldown && new Date().getTime()<cooldown){
+    unlockBtn.disabled=true;
+    unlockBtn.textContent="🔒 এখন ব্লক, পরে আবার চেষ্টা করুন";
+  }
+}
+
+/* 🔥 নামের তালিকা ঘুরে ঘুরে দেখাবে */
+const fakeNames=[
+  "রুবেল","সোহাগ","তানভীর","মিম","রিয়া","ইমন","নাসির","সাজিদ","রোকেয়া","রিফাত","মারিয়া","সামির","সুব্রত","লাবণী"
+];
+const messages=["130 মিনিটের জন্য অ্যাকটিভ হয়েছে","3 ঘন্টার জন্য বন্ধ হয়ে গিয়েছে"];
+let idx=0;
+function loopNames(){
+  const name=fakeNames[Math.floor(Math.random()*fakeNames.length)];
+  const msg=messages[Math.floor(Math.random()*messages.length)];
+  scrollText.textContent=`🔹 ${name} ${msg}`;
+  scrollText.style.animation='none';
+  void scrollText.offsetWidth;
+  scrollText.style.animation='scrollAnim 4s ease-in-out infinite';
+}
+setInterval(loopNames,4000);
+loopNames();
+
+function openInfo(){document.getElementById('infoPopup').style.display='flex';}
+function closeInfo(){document.getElementById('infoPopup').style.display='none';}
+
+checkUser();
+</script>
+
+</body>
+</html>
